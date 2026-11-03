@@ -3,14 +3,15 @@ name: Build Photo MCQ Quiz APK
 on:
   workflow_dispatch:
   push:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download source
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Java
@@ -22,13 +23,17 @@ jobs:
       - name: Set up Android
         uses: android-actions/setup-android@v3
         with:
-        packages: 'platform-tools'
+          packages: 'platform-tools'
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
 
       - name: Extract project ZIP
-        run: unzip Photo-MCQ-Quiz-Source.zip -d source
+        run: |
+          mkdir -p source
+          unzip 'Photo-MCQ-Quiz-Source*.zip' -d source
 
       - name: Build APK
         run: gradle -p source/Photo-MCQ-Quiz assembleDebug
