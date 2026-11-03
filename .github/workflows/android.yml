@@ -1,3 +1,4 @@
+
 name: Build Photo MCQ Quiz APK
 
 on:
@@ -30,16 +31,15 @@ jobs:
         with:
           gradle-version: '8.9'
 
-              - name: Extract project ZIP
-          run: |
-            mkdir -p source
-            unzip 'Photo-MCQ-Quiz-Source*.zip' -d source
+      - name: Extract project ZIP
+        run: |
+          mkdir -p source
+          unzip 'Photo-MCQ-Quiz-Source*.zip' -d source
 
-        - name: Reduce Gradle memory
-          run: sed -i 's/-Xmx2g/-Xmx1g/' source/Photo-MCQ-Quiz/gradle.properties
+      - name: Reduce Gradle memory
+        run: sed -i 's/-Xmx2g/-Xmx1g/' source/Photo-MCQ-Quiz/gradle.properties
 
-        - name: Build APK
-          run: gradle -p source/Photo-MCQ-Quiz assembleDebug
+      - name: Build APK
         run: gradle -p source/Photo-MCQ-Quiz assembleDebug
 
       - name: Upload APK
@@ -47,3 +47,4 @@ jobs:
         with:
           name: Photo-MCQ-Quiz-APK
           path: source/Photo-MCQ-Quiz/app/build/outputs/apk/debug/app-debug.apk
+          
