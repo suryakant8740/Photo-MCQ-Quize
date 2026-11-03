@@ -1,4 +1,3 @@
-
 name: Build Photo MCQ Quiz APK
 
 on:
@@ -36,8 +35,13 @@ jobs:
           mkdir -p source
           unzip 'Photo-MCQ-Quiz-Source*.zip' -d source
 
-      - name: Reduce Gradle memory
-        run: sed -i 's/-Xmx2g/-Xmx1g/' source/Photo-MCQ-Quiz/gradle.properties
+      - name: Fix Gradle properties
+        run: |
+          printf '%s\n' \
+            'org.gradle.jvmargs=-Xmx1g -Dfile.encoding=UTF-8' \
+            'android.useAndroidX=true' \
+            'kotlin.code.style=official' \
+            > source/Photo-MCQ-Quiz/gradle.properties
 
       - name: Build APK
         run: gradle -p source/Photo-MCQ-Quiz assembleDebug
@@ -47,4 +51,3 @@ jobs:
         with:
           name: Photo-MCQ-Quiz-APK
           path: source/Photo-MCQ-Quiz/app/build/outputs/apk/debug/app-debug.apk
-          
