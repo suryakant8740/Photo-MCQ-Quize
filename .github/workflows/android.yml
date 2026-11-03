@@ -30,13 +30,16 @@ jobs:
         with:
           gradle-version: '8.9'
 
-      - name: Extract project ZIP
-        run: |
-          mkdir -p source
-          unzip 'Photo-MCQ-Quiz-Source*.zip' -d source
+              - name: Extract project ZIP
+          run: |
+            mkdir -p source
+            unzip 'Photo-MCQ-Quiz-Source*.zip' -d source
+
         - name: Reduce Gradle memory
           run: sed -i 's/-Xmx2g/-Xmx1g/' source/Photo-MCQ-Quiz/gradle.properties
-      - name: Build APK
+
+        - name: Build APK
+          run: gradle -p source/Photo-MCQ-Quiz assembleDebug
         run: gradle -p source/Photo-MCQ-Quiz assembleDebug
 
       - name: Upload APK
