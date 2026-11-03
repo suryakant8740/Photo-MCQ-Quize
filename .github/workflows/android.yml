@@ -46,7 +46,7 @@ jobs:
       - name: Fix Java and Kotlin versions
         run: |
           sed -i 's/JavaVersion.VERSION_1_8/JavaVersion.VERSION_17/g' source/Photo-MCQ-Quiz/app/build.gradle.kts
-          sed -i 's/jvmTarget = "1.8"/jvmTarget = "17"/g' source/Photo-MCQ-Quiz/app/build.gradle.kts
+          sed -i 's/jvmTarget = "17"/jvmTarget = "1.8"/g' source/Photo-MCQ-Quiz/app/build.gradle.kts
 
       - name: Build APK
         run: gradle -p source/Photo-MCQ-Quiz assembleDebug
